@@ -1,0 +1,35 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: msvc-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: msvc-project
+          uri: 'http://microservice-proyectos:8092'
+          predicates:
+            - Path=/api/proyectos/**
+        - id: msvc-users
+          uri: 'http://microservice-usuarios:8100'
+          predicates:
+            - Path=/api/usuarios/**
+        - id: msvc-annotation
+          uri: 'http://microservice-anotaciones:8095'
+          predicates:
+            - Path=/api/anotaciones/**
+        - id: msvc-auth
+          uri: 'http://microservice-autenticacion:8093'
+          predicates:
+            - Path=/api/auth/**
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://microservice-eureka:8761/eureka
+    register-with-eureka: true
+    fetch-registry: true

@@ -1,0 +1,15 @@
+server:
+  port: 8093
+
+spring:
+  application:
+    name: msvc-auth
+
+msvc:
+  usuarios:
+    url: http://localhost:8100
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka

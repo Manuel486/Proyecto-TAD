@@ -1,0 +1,16 @@
+server:
+  port: 8093
+
+spring:
+  application:
+    name: msvc-auth
+
+msvc:
+  usuarios:
+    url: http://microservice-usuarios:8100
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://microservice-eureka:8761/eureka
+    register-with-eureka: true

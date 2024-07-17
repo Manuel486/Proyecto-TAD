@@ -1,0 +1,12 @@
+security:
+  jwt:
+    key:
+      private: 3044b61a471f36b33dc8c56b97da186ea99dd4eb0419a723c03d0ccc528fb652
+    user:
+      generator: AUTH0JWT-BACKEND
+
+spring:
+  application:
+    name: msvc-auth
+  config:
+    import: optional:configserver:http://microservice-config:8888

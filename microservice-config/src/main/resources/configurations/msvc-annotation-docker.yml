@@ -1,0 +1,31 @@
+server:
+  port: 8095
+
+spring:
+  application:
+    name: msvc-annotation
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://mysql:3306/projectsDb
+    username: root
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: create
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+
+msvc:
+  usuarios:
+    url: http://microservice-usuarios:8100
+  proyectos:
+    url: http://microservice-proyectos:8092
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://microservice-eureka:8761/eureka
+    register-with-eureka: true
+
+zipkin:
+  base-url: http://zipkin:9411

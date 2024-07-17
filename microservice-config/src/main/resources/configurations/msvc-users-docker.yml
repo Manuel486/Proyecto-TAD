@@ -1,0 +1,24 @@
+server:
+  port: 8100
+
+spring:
+  application:
+    name: msvc-users
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://mysql:3306/usersDb
+    username: root
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: create
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://microservice-eureka:8761/eureka
+
+zipkin:
+  base-url: http://zipkin:9411

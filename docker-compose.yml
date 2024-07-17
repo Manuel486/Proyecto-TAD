@@ -1,0 +1,117 @@
+version: "3.9"
+
+networks:
+  microservice-network:
+    driver: bridge
+
+services:
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    ports:
+      - "3320:3320"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    networks:
+      - microservice-network
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  zipkin:
+    image: openzipkin/zipkin:latest
+    container_name: zipkin
+    ports:
+      - "9411:9411"
+    networks:
+      - microservice-network
+    environment:
+      ZIPKIN_BASE_URL: http://zipkin:9411
+
+  microservice-config:
+    image: microservices/microservice-config:latest
+    container_name: microservice-config
+    build:
+      context: ./microservice-config
+    ports:
+      - "8888:8888"
+    networks:
+      - microservice-network
+
+  microservice-eureka:
+    image: microservices/microservice-eureka:latest
+    container_name: microservice-eureka
+    ports:
+      - "8761:8761"
+    build:
+      context: ./microservice-eureka
+    networks:
+      - microservice-network
+
+  microservice-usuarios:
+    image: microservices/microservice-usuarios:latest
+    container_name: microservice-usuarios
+    ports:
+      - "8100:8100"
+    build:
+      context: ./microservice-user
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      CONFIG_SERVER_URI: http://microservice-config:8888
+      SPRING_ZIPKIN_BASE_URL: http://zipkin:9411
+      SPRING_SLEUTH_SAMPLER_PROBABILITY: 1.0
+    networks:
+      - microservice-network
+
+  microservice-proyectos:
+    image: microservices/microservice-proyectos:latest
+    container_name: microservice-proyectos
+    ports:
+      - "8092:8092"
+    build:
+      context: ./microservice-project
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      CONFIG_SERVER_URI: http://microservice-config:8888
+      SPRING_ZIPKIN_BASE_URL: http://zipkin:9411
+      SPRING_SLEUTH_SAMPLER_PROBABILITY: 1.0
+    networks:
+      - microservice-network
+
+  microservice-anotaciones:
+    image: microservices/microservice-anotaciones:latest
+    container_name: microservice-anotaciones
+    ports:
+      - "8095:8095"
+    build:
+      context: ./microservice-annotation
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      CONFIG_SERVER_URI: http://microservice-config:8888
+      SPRING_ZIPKIN_BASE_URL: http://zipkin:9411
+      SPRING_SLEUTH_SAMPLER_PROBABILITY: 1.0
+    networks:
+      - microservice-network
+
+  microservice-autenticacion:
+    image: microservices/microservice-autenticacion:latest
+    container_name: microservice-autenticacion
+    ports:
+      - "8093:8093"
+    build:
+      context: ./microservice-auth
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      CONFIG_SERVER_URI: http://microservice-config:8888
+      SPRING_SLEUTH_SAMPLER_PROBABILITY: 1.0
+    networks:
+      - microservice-network
+
+  microservice-gateway:
+    image: microservices/microservice-gateway:latest
+    container_name: microservice-gateway
+    ports:
+      - "8080:8080"
+    build:
+      context: ./microservice-gateway
+    networks:
+      - microservice-network

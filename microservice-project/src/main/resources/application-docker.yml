@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: msvc-project
+  config:
+    import: optional:configserver:http://microservice-config:8888
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
