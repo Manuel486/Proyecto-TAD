@@ -23,6 +23,3 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://microservice-eureka:8761/eureka
-
-zipkin:
-  base-url: http://zipkin:9411

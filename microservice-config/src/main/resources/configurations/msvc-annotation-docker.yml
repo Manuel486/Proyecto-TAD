@@ -26,6 +26,3 @@ eureka:
     serviceUrl:
       defaultZone: http://microservice-eureka:8761/eureka
     register-with-eureka: true
-
-zipkin:
-  base-url: http://zipkin:9411

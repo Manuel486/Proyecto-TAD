@@ -10,3 +10,11 @@ spring:
     name: msvc-auth
   config:
     import: optional:configserver:http://microservice-config:8888
+
+management:
+  zipkin:
+    tracing:
+      endpoint: http://zipkin:9411/api/v2/spans
+  tracing:
+    sampling:
+      probability: 1.0

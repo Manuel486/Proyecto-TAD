@@ -1,0 +1,20 @@
+security:
+  jwt:
+    key:
+      private: 3044b61a471f36b33dc8c56b97da186ea99dd4eb0419a723c03d0ccc528fb652
+    user:
+      generator: AUTH0JWT-BACKEND
+
+spring:
+  application:
+    name: msvc-auth
+  config:
+    import: 'optional:configserver:http://localhost:8888'
+
+management:
+  zipkin:
+    tracing:
+      endpoint: http://localhost:9411/api/v2/spans
+  tracing:
+    sampling:
+      probability: 1.0
